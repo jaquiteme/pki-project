@@ -20,7 +20,7 @@ end_licence = datetime.datetime(end.year, end.month, end.day)
 
 KEYS = {}
 
-with open("/home/jordy/tp-rt0802/ca.crt", "rb") as fcert:
+with open(r"~/tp-projet/ca.crt", "rb") as fcert:
     SUBJECT = x509.load_pem_x509_certificate(fcert.read(), default_backend())     
 
 #Fonction qui permet de charger la clef provée du serveur SCA
