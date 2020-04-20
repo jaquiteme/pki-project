@@ -5,6 +5,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 import datetime
+import pathlib
 
 #Fonction qui permet de générer les clefs (privée et public) et le CSR
 def generate_keys(id, oid):
@@ -187,3 +188,13 @@ def get_cert_subject(certificate):
     O = cert.subject.get_attributes_for_oid(NameOID.ORGANIZATION_NAME)[0].value
 
     return CN, O
+
+def load_host_certificates(path):
+    _list = []
+    currentDirectory = pathlib.Path(path)
+    for currentFile in currentDirectory.iterdir():
+        _list.append(currentFile)
+
+    return _list
+
+
