@@ -25,7 +25,7 @@ with open("/home/jordy/tp-rt0802/ca.crt", "rb") as fcert:
 
 #Fonction qui permet de charger la clef provée du serveur SCA
 def sca_private_key():
-    with open("/home/jordy/tp-rt0802/ca.pem", "rb") as fkey:
+    with open(r"~/tp-projet/ca.pem", "rb") as fkey:
         CA_KEY = serialization.load_pem_private_key(
             fkey.read(),
             password=None,
@@ -72,7 +72,7 @@ def generate_certificate(csr):
 
 #Fonction qui charge le certificat du serveur SCA
 def sca_certificate():
-    with open("/home/jordy/tp-rt0802/ca.crt", "rb") as crt:
+    with open(r"~/tp-projet/ca.crt", "rb") as crt:
         CA_CERTIFICATE = crt.read()
     payload = {}
     payload["sca_certificate"] =  CA_CERTIFICATE.decode('utf8').replace("'", '"')
