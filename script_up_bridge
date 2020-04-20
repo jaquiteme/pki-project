@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ip link add name br type bridge
+ip addr add 192.168.1.254/24 dev br
+ip link set dev br up
+
+iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+
+lxc-start -n client1
+lxc-start -n client2
+lxc-start -n sca_server

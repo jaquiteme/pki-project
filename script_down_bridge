@@ -1,0 +1,8 @@
+#!/bin/bash
+
+lxc-stop -n client1
+lxc-stop -n client2
+lxc-stop -n sca_server
+
+iptables -F
+ip link delete dev br

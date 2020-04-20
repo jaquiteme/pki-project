@@ -1,0 +1,10 @@
+#!/bin/bash
+
+iptables -t nat -A PREROUTING -i enp0s3 -p tcp --dport 2221 -j DNAT --to-destination 192.168.1.1:22 
+iptables -A FORWARD -i enp0s3 -p tcp -dport 2221 -j ACCEPT
+
+iptables -t nat -A PREROUTING -i enp0s3 -p tcp --dport 2222 -j DNAT --to-destination 192.168.1.2:22
+iptables -A FORWARD -i enp0s3 -p tcp -dport 2222 -j ACCEPT
+
+iptables -t nat -A PREROUTING -i enp0s3 -p tcp --dport 2223 -j DNAT --to-destination 192.168.1.3:22
+iptables -A FORWARD -i enp0s3 -p tcp -dport 2223 -j ACCEPT
