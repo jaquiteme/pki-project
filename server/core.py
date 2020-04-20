@@ -20,12 +20,12 @@ end_licence = datetime.datetime(end.year, end.month, end.day)
 
 KEYS = {}
 
-with open(r"server/ca.crt", "rb") as fcert:
+with open(r"ca.crt", "rb") as fcert:
     SUBJECT = x509.load_pem_x509_certificate(fcert.read(), default_backend())     
 
 #Fonction qui permet de charger la clef provée du serveur SCA
 def sca_private_key():
-    with open(r"server/ca.pem", "rb") as fkey:
+    with open(r"ca.pem", "rb") as fkey:
         CA_KEY = serialization.load_pem_private_key(
             fkey.read(),
             password=None,
@@ -72,7 +72,7 @@ def generate_certificate(csr):
 
 #Fonction qui charge le certificat du serveur SCA
 def sca_certificate():
-    with open(r"server/ca.crt", "rb") as crt:
+    with open(r"ca.crt", "rb") as crt:
         CA_CERTIFICATE = crt.read()
     payload = {}
     payload["sca_certificate"] =  CA_CERTIFICATE.decode('utf8').replace("'", '"')
