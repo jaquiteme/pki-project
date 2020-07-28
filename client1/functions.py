@@ -1,3 +1,7 @@
+"""
+2019-2020, Jordy Aquiteme <jordyaquiteme@gmail.com>
+Ce fichier fait partit du TP PKI
+"""
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import hashes, serialization
@@ -51,7 +55,7 @@ def generate_keys(id, oid):
 
     return public_bytes
 
-#Fonction qui permet d extraire la clef d un  certificat
+#Fonction qui permet d extraire la clef public d un  certificat
 def extract_server_pk(param):
     
     cert = x509.load_pem_x509_certificate(param,default_backend())
@@ -110,7 +114,7 @@ def certificate_to_byte(cert):
     _cert = x509.load_pem_x509_certificate(cert, default_backend())
     return _cert
 
-#Fonction qui permet de vérifier la signature
+#Fonction qui permet de vérifier une signature
 def verify_signature(cert, signature, message):
     cert = certificate_to_byte(cert)
     public_key = cert.public_key()
@@ -129,7 +133,7 @@ def verify_signature(cert, signature, message):
     except ValueError:
         return "problem"
 
-#Fonction qui permet de faire un chiffrement asymetrique
+#Fonction qui permet de réaliser un chiffrement asymetrique
 def encrypt_asym(certificate, message):
     cert = certificate_to_byte(certificate)
     public_key = cert.public_key()

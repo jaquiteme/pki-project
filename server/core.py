@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+"""
+2019-2020, Jordy Aquiteme <jordyaquiteme@gmail.com>
+Ce fichier fait partit du TP PKI
+"""
 import json
 import os
 import sys

@@ -15,7 +15,7 @@ APIENDPOINT = "http://127.0.0.1:5000"
 
 #Cette fonction permet de faire des requêtes de demande 
 # de signature de certificat vers le serveur SCA
-def get_certificates():
+def get_certificates(name, pool):
      with open("sca.crt", "rb") as crt:
         CA_PK = extract_server_pk(crt.read())
 
@@ -39,7 +39,7 @@ def get_certificates():
      # symétrique entre les deux acteurs
      payload = {}
      payload["data"] = b64encode(ciphertext)
-     payload["host"] = sys.argv[1]
+     payload["host"] = name
      response = requests.post("{}/connexion".format(APIENDPOINT), data=payload) 
      #print(response.text)
      data = json.loads(response.text)
@@ -53,10 +53,10 @@ def get_certificates():
           _date = datetime.datetime.now()
           print("[{}] > Début de la session au SCA".format(_date.strftime("%H:%M:%S")))
           #Place reservé pour la boucle (début)
-          for i in range(int(sys.argv[2])):
+          for i in range(int(pool)):
                _date = datetime.datetime.now()
                #Génération du csr
-               csr = generate_keys(sys.argv[1], (i+1))
+               csr = generate_keys(name, (i+1))
                
                print("[{}] > Envoie du CSR".format(_date.strftime("%H:%M:%S")))
 
@@ -66,7 +66,7 @@ def get_certificates():
                #Paramètres
                payload = {}
                payload["data"] = b64encode(csr_crypt)
-               payload["host"] = sys.argv[1]
+               payload["host"] = name
 
                #Le client demande l'etablissement d'un certificat en envoyant son "CSR"
                response = requests.post("{}/ask_certificate".format(APIENDPOINT), data=payload)
@@ -80,7 +80,7 @@ def get_certificates():
                print("[{}] > Reception du CRT".format(_date.strftime("%H:%M:%S")))
                print("[{}] > Ecriture du CRT dans un fichier".format(_date.strftime("%H:%M:%S")))
 
-               with open("pool/certs/{}_{}.mrt.crt".format(sys.argv[1], i+1), "wb") as fout:
+               with open("pool/certs/{}_{}.mrt.crt".format(name, i+1), "wb") as fout:
                     fout.write(dec_certificate.rstrip(b"0"))
 
                _date = datetime.datetime.now()
@@ -93,7 +93,7 @@ def get_certificates():
           end = _encrypt_aes(r_key, end_message + (b"0"*(16 - len(end_message))))
           payload = {}
           payload["data"] = b64encode(end)
-          payload["host"] = sys.argv[1]
+          payload["host"] = name
           response = requests.post("{}/deconnexion".format(APIENDPOINT), data=payload)
           data = json.loads(response.text)
           _date = datetime.datetime.now()
@@ -114,4 +114,4 @@ def get_sca_certificate():
     with open("sca.crt", "wb") as fout:
          fout.write(data['sca_certificate'].encode('utf8'))
 
-get_certificates()
+get_certificates('client1', 3)

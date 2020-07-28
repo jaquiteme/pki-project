@@ -6,7 +6,11 @@ from functions import load_cert, load_private_k, sign_message, verify_signature,
 
 host = '127.0.0.1'
 port = 12800
-
+#!/usr/bin/python3
+"""
+2019-2020, Jordy Aquiteme <jordyaquiteme@gmail.com>
+Ce fichier fait partit du TP PKI
+"""
 connexion = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connexion.bind((host, port))
 connexion.listen(5)
@@ -14,7 +18,7 @@ connexion.listen(5)
 my_certificate = load_cert(r"pool/certs/client2_2.mrt.crt")
 my_private = load_private_k(r"pool/keys/client2_2.pem")
 
-print("Le serveur écoute à présent sur le port {}".format(port))
+print("Le client 2 écoute à présent sur le port {}".format(port))
 
 con_from_another_client, infos_connexion = connexion.accept()
 

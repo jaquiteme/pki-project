@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+"""
+2019-2020, Jordy Aquiteme <jordyaquiteme@gmail.com>
+Ce fichier fait partit du TP PKI
+"""
 from cryptography.hazmat.backends import default_backend
 from base64 import b64encode, b64decode
 from cryptography.hazmat.primitives.asymmetric import rsa, padding

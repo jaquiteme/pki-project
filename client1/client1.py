@@ -1,3 +1,7 @@
+"""
+2019-2020, Jordy Aquiteme <jordyaquiteme@gmail.com>
+Ce fichier fait partit du TP PKI
+"""
 import os
 import socket
 import json
