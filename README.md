@@ -1,4 +1,4 @@
-# tp-projet PKI
+# Projet PKI
 
 ## SERVER
 Le serveur PKI (Public Key Infrastructure).
